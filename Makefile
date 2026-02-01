@@ -25,10 +25,10 @@ testbin/teststrdatasource: obj/StringDataSource.o testobj/StringDataSourceTest.o
 testbin/teststrdatasink: obj/StringDataSink.o testobj/StringDataSinkTest.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 
-testbin/testdsv: obj/DSVReader.o obj/DSVWriter.o testobj/DSVTest.o
+testbin/testdsv: obj/DSVReader.o obj/DSVWriter.o obj/StringDataSource.o obj/StringDataSink.o testobj/DSVTest.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 
-testbin/testxml: obj/XMLReader.o obj/XMLWriter.o testobj/XMLTest.o
+testbin/testxml: obj/XMLReader.o obj/XMLWriter.o obj/StringDataSource.o obj/StringDataSink.o testobj/XMLTest.o
 	$(CXX) $^ $(LDFLAGS) -lexpat -o $@
 
 all: dirs testbin/teststrutils testbin/teststrdatasource testbin/teststrdatasink testbin/testdsv testbin/testxml
