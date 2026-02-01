@@ -2,9 +2,9 @@ CXX = g++
 
 EXTRA_INC =
 EXTRA_LIB =
-ifneq ($(wildcard /opt/miniconda3/include/gtest/gtest.h),)
-EXTRA_INC = -I /opt/miniconda3/include
-EXTRA_LIB = -L /opt/miniconda3/lib
+ifneq ($(wildcard /opt/homebrew/include/gtest/gtest.h),)
+EXTRA_INC = -I /opt/homebrew/include -I /opt/homebrew/opt/expat/include
+EXTRA_LIB = -L /opt/homebrew/lib -L /opt/homebrew/opt/expat/lib
 endif
 
 CXXFLAGS = -std=c++20 -fprofile-arcs -ftest-coverage -I include $(EXTRA_INC)
