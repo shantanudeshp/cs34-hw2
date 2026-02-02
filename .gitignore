@@ -1,0 +1,15 @@
+obj/
+bin/
+lib/
+testbin/
+testobj/
+
+*.gcov
+*.gcda
+*.gcno
+coverage*.info
+htmlcov/
+*.info
+
+.DS_Store
+.vscode/
