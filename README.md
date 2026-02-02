@@ -572,3 +572,30 @@ Implemented character-data skipping inside the ReadEntity function instead of mo
 Separating parsing from filtering keeps the parser correct and avoids breaking XML structure while still supporting optional character-data skipping.
 
 ---
+
+### 24. Cleaning up "Make" output
+
+**Prompt:**
+How do I make the "make" command have the output of only whether the tests passed or fail?
+
+**Original AI Response:**
+The AI explained that the extra output was coming from additional commands in the Makefile, such as coverage generation (gcov, lcov, and genhtml). It suggested separating test execution from coverage steps, using a dedicated test target that only runs the test binaries, and filtering test output using Google Test flags or shell commands so that only pass/fail results are displayed.
+
+**Changes Made:**
+Added the lines below to Makefile
+
+// Tests to only make output show only test results and clean things up
+test: dirs testbin/teststrutils testbin/teststrdatasource testbin/teststrdatasink testbin/testdsv testbin/testxml
+	@./testbin/teststrutils --gtest_brief=1 2>&1 | egrep '\[  (PASSED|FAILED)  \]'
+	@./testbin/teststrdatasource --gtest_brief=1 2>&1 | egrep '\[  (PASSED|FAILED)  \]'
+	@./testbin/teststrdatasink --gtest_brief=1 2>&1 | egrep '\[  (PASSED|FAILED)  \]'
+	@./testbin/testdsv --gtest_brief=1 2>&1 | egrep '\[  (PASSED|FAILED)  \]'
+	@./testbin/testxml --gtest_brief=1 2>&1 | egrep '\[  (PASSED|FAILED)  \]'
+
+all: test
+
+
+**Rationale**
+These changes were made to reduce unnecessary console output and make test results easier to read. By limiting the output to pass/fail information, it becomes clearer whether the project is functioning correctly without being distracted by coverage data or build logs.
+
+---
