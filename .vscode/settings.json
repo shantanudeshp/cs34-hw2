@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "**/*.gcov": true,
+    "**/coverage*.info": true,
+    "**/htmlcov": true
+  }
+}

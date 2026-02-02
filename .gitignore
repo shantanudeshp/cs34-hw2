@@ -1,0 +1,14 @@
+# Hiding files and directories generated during build and testing
+obj/
+bin/
+testbin/
+testobj/
+lib/
+
+
+*.gcov
+coverage*.info
+htmlcov/
+
+
+.DS_Store
