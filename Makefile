@@ -1,6 +1,15 @@
 .DEFAULT_GOAL := all
 CXX = g++
 
+# conditional paths for local (homebrew) vs CSIF
+ifneq ($(wildcard /opt/homebrew/include/gtest/gtest.h),)
+EXTRA_INC = -I /opt/homebrew/include -I /opt/homebrew/opt/expat/include
+EXTRA_LIB = -L /opt/homebrew/lib -L /opt/homebrew/opt/expat/lib
+endif
+
+CXXFLAGS = -std=c++20 -fprofile-arcs -ftest-coverage -I include $(EXTRA_INC)
+LDFLAGS = -lgtest -lgtest_main -lpthread -fprofile-arcs -ftest-coverage $(EXTRA_LIB)
+
 .PHONY: all test coverage clean dirs
 
 # Tests to only make output show only test results and clean things up
@@ -41,3 +50,12 @@ testbin/testdsv: obj/DSVReader.o obj/DSVWriter.o obj/StringDataSource.o obj/Stri
 
 testbin/testxml: obj/XMLReader.o obj/XMLWriter.o obj/StringDataSource.o obj/StringDataSink.o testobj/XMLTest.o
 	@$(CXX) $^ $(LDFLAGS) -lexpat -o $@
+
+obj testobj testbin bin lib htmlcov:
+	@mkdir -p $@
+
+dirs:
+	@mkdir -p bin htmlcov lib obj testbin testobj
+
+clean:
+	@rm -rf bin htmlcov lib obj testbin testobj *.gcda *.gcno *.info *.gcov
